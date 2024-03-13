@@ -1,7 +1,6 @@
 package edu.ucalgary.oop;
 
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class DisasterVictim {
     private static int counter = 0;
