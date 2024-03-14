@@ -8,13 +8,15 @@ public class MedicalRecord {
     private String treatmentDetails;
     private String dateOfTreatment;
 
-    public MedicalRecord(Location location, String treatmentDetails, String dateOfTreatment) throws IllegalArgumentException {
+    public MedicalRecord(Location location, String treatmentDetails, String dateOfTreatment)
+            throws IllegalArgumentException {
         setLocation(location);
         this.treatmentDetails = treatmentDetails;
 
         // Check if the treatmentDetails string matches the expected date format
         if (!isValidDateFormat(dateOfTreatment)) {
-            throw new IllegalArgumentException("Invalid date format for treatment details. Expected format: YYYY-MM-DD");
+            throw new IllegalArgumentException(
+                    "Invalid date format for treatment details. Expected format: YYYY-MM-DD");
         }
         this.dateOfTreatment = dateOfTreatment;
     }

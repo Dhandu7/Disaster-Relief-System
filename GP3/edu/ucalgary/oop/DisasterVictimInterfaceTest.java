@@ -15,24 +15,10 @@ public class DisasterVictimInterfaceTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final InputStream originalIn = System.in;
-    private final String input = "John\nDoe\n1990-01-01\n2024-03-01";
-    private final String expectedOutput = "Welcome to the Disaster Victim Information System\n" +
-            "\n" +
-            "Select an option:\n" +
-            "1. Enter new Disaster Victim\n" +
-            "2. Exit\n" +
-            "\n" +
-            "Enter details for the new Disaster Victim:\n" +
-            "First Name: Last Name: Date of Birth (YYYY-MM-DD): Date of Entry (YYYY-MM-DD): \n" +
-            "Disaster Victim entered successfully:\n" +
-            "Name: John Doe\n" +
-            "Date of Birth: 1990-01-01\n" +
-            "Date of Entry: 2024-03-01\n";
 
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
     }
 
     @After
@@ -43,14 +29,27 @@ public class DisasterVictimInterfaceTest {
 
     @Test
     public void testEnterDisasterVictim() {
-        String input = "John\nDoe\n1990-01-01\n2024-03-01\n";
+        String input = "John\nDoe\n1990-01-01\n2024-03-01\nLocationName\nTreatmentDetails\n2024-03-01\nRelatedFirstName\nRelatedLastName\nRelationship\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        DisasterVictimInterface.enterDisasterVictim();
-        String expectedOutput = "Disaster Victim entered successfully:";
-        assertTrue(outputStream.toString().contains(expectedOutput));
-    }
 
+        DisasterVictimInterface.enterDisasterVictim();
+
+        String output = outContent.toString();
+
+        // Verify if the output contains the expected messages
+        assertTrue(output.contains("Disaster Victim entered successfully:"));
+        assertTrue(output.contains("Medical Record added successfully:"));
+        assertTrue(output.contains("Relationship added successfully:"));
+
+        // Verify if the output contains specific details
+        assertTrue(output.contains("Name: John Doe"));
+        assertTrue(output.contains("Date of Birth: 1990-01-01"));
+        assertTrue(output.contains("Date of Entry: 2024-03-01"));
+        assertTrue(output.contains("Location: LocationName"));
+        assertTrue(output.contains("Treatment Details: TreatmentDetails"));
+        assertTrue(output.contains("Date of Treatment: 2024-03-01"));
+        assertTrue(output.contains("Related Person: RelatedFirstName RelatedLastName"));
+        assertTrue(output.contains("Relationship to Victim: Relationship"));
+    }
 }

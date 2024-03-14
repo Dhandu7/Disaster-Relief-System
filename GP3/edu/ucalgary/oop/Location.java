@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class Location {
     private String name;
     private String address;
-    private ArrayList<DisasterVictim> occupants = new ArrayList<>(); // Initialized
-    private ArrayList<Supply> supplies = new ArrayList<>(); // Initialized
+    private ArrayList<DisasterVictim> occupants = new ArrayList<>();
+    private ArrayList<Supply> supplies = new ArrayList<>();
+    private ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
 
     // Constructor
     public Location(String name, String address) {
@@ -72,4 +73,15 @@ public class Location {
         this.supplies.remove(supply);
     }
 
+    public void addMedicalRecord(MedicalRecord record) {
+        medicalRecords.add(record);
+    }
+
+    public void removeMedicalRecord(MedicalRecord record) {
+        medicalRecords.remove(record);
+    }
+
+    public ArrayList<MedicalRecord> getMedicalRecords() {
+        return medicalRecords;
+    }
 }
