@@ -6,9 +6,12 @@ public class Person {
     private String dateOfBirth;
 
     public Person(String FIRST_NAME, String LAST_NAME, String dateOfBirth) throws IllegalArgumentException {
+        this.FIRST_NAME = FIRST_NAME;
+        this.LAST_NAME = LAST_NAME;
         if (!isValidDateFormat(dateOfBirth)) {
             throw new IllegalArgumentException("Invalid date format: " + dateOfBirth);
         }
+        this.dateOfBirth = dateOfBirth;
     }
 
     private static boolean isValidDateFormat(String date) {

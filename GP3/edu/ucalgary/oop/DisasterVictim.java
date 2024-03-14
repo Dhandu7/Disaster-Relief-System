@@ -2,9 +2,8 @@ package edu.ucalgary.oop;
 
 import java.util.ArrayList;
 
-public class DisasterVictim {
+public class DisasterVictim extends Person {
     private static int counter = 0;
-    private Person person;
     private final int ASSIGNED_SOCIAL_ID;
     private ArrayList<FamilyRelation> familyConnections = new ArrayList<>();
     private ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
@@ -13,12 +12,11 @@ public class DisasterVictim {
     private String gender;
     private String comments;
 
-    public DisasterVictim(Person person, String ENTRY_DATE) {
-        // person constructor
+    public DisasterVictim(String FIRST_NAME, String LAST_NAME, String dateOfBirth, String ENTRY_DATE) {
+        super(FIRST_NAME, LAST_NAME, dateOfBirth);
         if (!isValidDateFormat(ENTRY_DATE)) {
             throw new IllegalArgumentException("Invalid date format for entry date. Expected format: YYYY-MM-DD");
         }
-        this.person = person;
         this.ENTRY_DATE = ENTRY_DATE;
         this.ASSIGNED_SOCIAL_ID = generateSocialID();
     }
@@ -34,6 +32,7 @@ public class DisasterVictim {
     }
 
     // Getters and setters
+
     public int getAssignedSocialID() {
         return ASSIGNED_SOCIAL_ID;
     }
