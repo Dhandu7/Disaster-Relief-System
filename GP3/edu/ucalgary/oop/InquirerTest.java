@@ -55,4 +55,12 @@ public class InquirerTest {
     public void testGetInfo() {
         assertEquals("getInfo() should return the inquirer message", expectedMessage, inquirer.getInfo());
     }
+
+    @Test
+    public void testAddInteraction() {
+        String interaction = "Spoke to family services regarding missing family members";
+        inquirer.addInteraction(interaction);
+        assertTrue("addInteraction() should add the interaction to the inquirer's log",
+                inquirer.getInteractions().contains(interaction));
+    }
 }
