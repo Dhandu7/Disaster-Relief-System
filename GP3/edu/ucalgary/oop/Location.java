@@ -67,8 +67,9 @@ public class Location {
         supplies.add(supply);
     }
 
-    // Remove a supply from supplies
     public void removeSupply(Supply supply) {
-        supplies.remove(supply);
+        // Remove the supply from the available supplies
+        this.supplies.remove(supply);
     }
+
 }

@@ -1,7 +1,6 @@
 package edu.ucalgary.oop;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class DisasterVictim extends Person {
     private static int counter = 0;
@@ -128,6 +127,13 @@ public class DisasterVictim extends Person {
             throw new IllegalArgumentException("Invalid gender. Acceptable values are male, female, or other.");
         }
         this.gender = gender.toLowerCase(); // Store in a consistent format
+    }
+
+    public void allocateSupply(Supply supply, Location location) {
+        // Add the supply to the victim's personal belongings
+        this.addPersonalBelonging(supply);
+        // Remove the supply from the location's available supplies
+        location.removeSupply(supply);
     }
 
 }

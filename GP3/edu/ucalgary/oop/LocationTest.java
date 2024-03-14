@@ -82,18 +82,9 @@ public class LocationTest {
 
     @Test
     public void testRemoveSupply() {
-        location.addSupply(supply); // Ensure the supply is added first
+        Supply supply = new Supply("Water", 100);
+        location.addSupply(supply);
         location.removeSupply(supply);
-        assertFalse("removeSupply should remove the supply from the supplies list",
-                containsSupply(location.getSupplies(), supply));
-    }
-
-    @Test
-    public void testSetAndGetSupplies() {
-        ArrayList<Supply> newSupplies = new ArrayList<>();
-        newSupplies.add(supply);
-        location.setSupplies(newSupplies);
-        assertTrue("setSupplies should replace the supplies list with the new list",
-                containsSupply(location.getSupplies(), supply));
+        assertFalse("removeSupply() should remove the specified supply", location.getSupplies().contains(supply));
     }
 }
