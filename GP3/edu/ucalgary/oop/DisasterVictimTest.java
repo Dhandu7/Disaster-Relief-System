@@ -24,6 +24,23 @@ public class DisasterVictimTest {
     }
 
     @Test
+    public void testConstructorWithGender() {
+        String firstName = "John";
+        String lastName = "Doe";
+        String dateOfBirth = "1990-05-15";
+        String entryDate = "2024-03-08";
+        String gender = "man";
+
+        DisasterVictim victim = new DisasterVictim(firstName, lastName, dateOfBirth, entryDate, gender);
+
+        assertEquals(firstName, victim.getFirstName());
+        assertEquals(lastName, victim.getLastName());
+        assertEquals(dateOfBirth, victim.getDateOfBirth());
+        assertEquals(entryDate, victim.getEntryDate());
+        assertEquals(gender, victim.getGender());
+    }
+
+    @Test
     public void testGetAssignedSocialID() {
         // The next victim should have an ID one higher than the previous victim
         // Tests can be run in any order so two victims will be created
@@ -45,10 +62,21 @@ public class DisasterVictimTest {
         assertNull("getGender() should return null initially", victim.getGender());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidGender() {
+        String firstName = "John";
+        String lastName = "Doe";
+        String dateOfBirth = "1990-05-15";
+        String entryDate = "2024-03-08";
+        String gender = "invalid";
+
+        DisasterVictim victim = new DisasterVictim(firstName, lastName, dateOfBirth, entryDate, gender);
+    }
+
     @Test
     public void testSetAndGetGender() {
-        victim.setGender("Male");
-        assertEquals("setGender() should update the gender", "male", victim.getGender());
+        victim.setGender("man");
+        assertEquals("setGender() should update the gender", "man", victim.getGender());
     }
 
     @Test

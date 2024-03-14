@@ -1,6 +1,7 @@
 package edu.ucalgary.oop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DisasterVictim extends Person {
     private static int counter = 0;
@@ -19,6 +20,17 @@ public class DisasterVictim extends Person {
         }
         this.ENTRY_DATE = ENTRY_DATE;
         this.ASSIGNED_SOCIAL_ID = generateSocialID();
+    }
+
+    // constructor that uses gender
+    public DisasterVictim(String FIRST_NAME, String LAST_NAME, String dateOfBirth, String ENTRY_DATE, String gender) {
+        super(FIRST_NAME, LAST_NAME, dateOfBirth);
+        if (!isValidDateFormat(ENTRY_DATE)) {
+            throw new IllegalArgumentException("Invalid date format for entry date. Expected format: YYYY-MM-DD");
+        }
+        this.ENTRY_DATE = ENTRY_DATE;
+        this.ASSIGNED_SOCIAL_ID = generateSocialID();
+        setGender(gender);
     }
 
     private static int generateSocialID() {
@@ -123,10 +135,22 @@ public class DisasterVictim extends Person {
     }
 
     public void setGender(String gender) {
-        if (!gender.matches("(?i)^(male|female|other)$")) {
-            throw new IllegalArgumentException("Invalid gender. Acceptable values are male, female, or other.");
+        GenderOptionsReader genderOptionsInstance = new GenderOptionsReader();
+        List<String> genderOptions = genderOptionsInstance.getGenderOptions();
+        String normalizedGender = gender.toLowerCase();
+
+        // Normalize gender options to lowercase
+        List<String> normalizedOptions = new ArrayList<>();
+        for (String option : genderOptions) {
+            normalizedOptions.add(option.toLowerCase());
         }
-        this.gender = gender.toLowerCase(); // Store in a consistent format
+
+        if (!normalizedOptions.contains(normalizedGender)) {
+            throw new IllegalArgumentException(
+                    "Invalid gender. Acceptable values are: " + String.join(", ", genderOptions));
+        }
+
+        this.gender = normalizedGender;
     }
 
     public void allocateSupply(Supply supply, Location location) {

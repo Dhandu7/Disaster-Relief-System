@@ -1,6 +1,7 @@
 package edu.ucalgary.oop;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,7 @@ public class PersonTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSetDateOfBirthWithInvalidFormat() {
         victim.setDateOfBirth(invalidDate); // This format should cause an exception
+        fail("Expected an IllegalArgumentException to be thrown");
     }
 
     @Test
@@ -45,5 +47,4 @@ public class PersonTest {
         assertEquals("setLastName should update and getLastName should return the new last name", newLastName,
                 victim.getLastName());
     }
-
 }
