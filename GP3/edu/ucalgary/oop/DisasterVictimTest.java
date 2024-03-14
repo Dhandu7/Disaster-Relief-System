@@ -84,19 +84,31 @@ public class DisasterVictimTest {
 
     @Test
     public void testAddFamilyConnection() {
-        DisasterVictim victim1 = new DisasterVictim("Jane", "Doe", "1999-09-09", "2024-01-20");
-        DisasterVictim victim2 = new DisasterVictim("John", "Doe", "1992-02-22", "2024-01-22");
+        DisasterVictim victim1 = new DisasterVictim("Jane", "Doe", "1999-02-22", "2024-01-20");
+        DisasterVictim victim2 = new DisasterVictim("John", "Doe", "1972-02-27", "2024-01-22");
 
         FamilyRelation relation = new FamilyRelation(victim2, "parent", victim1);
         victim2.addFamilyConnection(relation);
 
-        FamilyRelation[] testFamily = victim2.getFamilyConnections().toArray(new FamilyRelation[0]);
-        boolean correct = false;
+        assertTrue("addFamilyConnection should add a family relationship to victim2",
+                victim2.getFamilyConnections().contains(relation));
+        assertTrue("addFamilyConnection should add a corresponding family relationship to victim1",
+                victim1.getFamilyConnections().contains(new FamilyRelation(victim1, "child", victim2)));
+    }
 
-        if ((testFamily != null) && (testFamily[0].equals(relation))) {
-            correct = true;
-        }
-        assertTrue("addFamilyConnection should add a family relationship", correct);
+    @Test
+    public void testRemoveFamilyConnection() {
+        DisasterVictim victim1 = new DisasterVictim("Jane", "Doe", "1999-02-22", "2024-01-20");
+        DisasterVictim victim2 = new DisasterVictim("John", "Doe", "1998-02-27", "2024-01-22");
+
+        FamilyRelation relation = new FamilyRelation(victim2, "parent", victim1);
+        victim2.addFamilyConnection(relation);
+        victim2.removeFamilyConnection(relation);
+
+        assertFalse("removeFamilyConnection should remove the family relationship from victim2",
+                victim2.getFamilyConnections().contains(relation));
+        assertFalse("removeFamilyConnection should remove the corresponding family relationship from victim1",
+                victim1.getFamilyConnections().contains(new FamilyRelation(victim1, "child", victim2)));
     }
 
     @Test
@@ -111,22 +123,6 @@ public class DisasterVictimTest {
         }
 
         assertTrue("addPersonalBelonging should add the supply to personal belongings", correct);
-    }
-
-    @Test
-    public void testRemoveFamilyConnection() {
-        DisasterVictim victim1 = new DisasterVictim("Jane", "Doe", "1999-09-09", "2024-01-20");
-        DisasterVictim victim2 = new DisasterVictim("John", "Doe", "1992-02-22", "2024-01-22");
-        FamilyRelation relation1 = new FamilyRelation(victim1, "parent", victim2);
-        FamilyRelation relation2 = new FamilyRelation(victim2, "child", victim1);
-
-        victim1.addFamilyConnection(relation1);
-        victim2.addFamilyConnection(relation2);
-
-        victim1.removeFamilyConnection(relation1);
-
-        assertEquals("removeFamilyConnection should remove the specified family relationship", 0,
-                victim1.getFamilyConnections().size());
     }
 
 }

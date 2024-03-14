@@ -1,6 +1,7 @@
 package edu.ucalgary.oop;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DisasterVictim extends Person {
     private static int counter = 0;
@@ -84,11 +85,21 @@ public class DisasterVictim extends Person {
     }
 
     public void removeFamilyConnection(FamilyRelation exRelation) {
-        familyConnections.remove(exRelation);
+        if (familyConnections.contains(exRelation)) {
+            familyConnections.remove(exRelation);
+            exRelation.getPersonTwo().removeFamilyConnection(
+                    new FamilyRelation(exRelation.getPersonTwo(), exRelation.getRelationshipTo(), this));
+        }
     }
 
-    public void addFamilyConnection(FamilyRelation record) {
-        familyConnections.add(record);
+    public void addFamilyConnection(FamilyRelation relation) {
+        if (!familyConnections.contains(relation)) {
+            familyConnections.add(relation);
+            DisasterVictim personTwo = relation.getPersonTwo();
+            if (personTwo != null) {
+                personTwo.addFamilyConnection(new FamilyRelation(personTwo, relation.getRelationshipTo(), this));
+            }
+        }
     }
 
     // Add a MedicalRecord to medicalRecords
