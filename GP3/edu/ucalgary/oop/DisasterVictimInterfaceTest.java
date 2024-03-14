@@ -29,7 +29,7 @@ public class DisasterVictimInterfaceTest {
 
     @Test
     public void testEnterDisasterVictim() {
-        String input = "John\nDoe\n1990-01-01\n2024-03-01\nLocationName\nTreatmentDetails\n2024-03-01\nRelatedFirstName\nRelatedLastName\nRelationship\n";
+        String input = "John\nDoe\n1990-01-01\n2024-03-01\nKSML\nLocationName\nTreatmentDetails\n2024-03-01\nRelatedFirstName\nRelatedLastName\nRelationship\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
 

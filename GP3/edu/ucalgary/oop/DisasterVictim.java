@@ -2,6 +2,7 @@ package edu.ucalgary.oop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.EnumSet;
 
 public class DisasterVictim extends Person {
     private static int counter = 0;
@@ -12,12 +13,14 @@ public class DisasterVictim extends Person {
     private final String ENTRY_DATE;
     private String gender;
     private String comments;
+    private EnumSet<DietaryRestriction> dietaryRestrictions;
 
     public DisasterVictim(String FIRST_NAME, String LAST_NAME, String dateOfBirth, String ENTRY_DATE) {
         super(FIRST_NAME, LAST_NAME, dateOfBirth);
         if (!isValidDateFormat(ENTRY_DATE)) {
             throw new IllegalArgumentException("Invalid date format for entry date. Expected format: YYYY-MM-DD");
         }
+        this.dietaryRestrictions = EnumSet.noneOf(DietaryRestriction.class);
         this.ENTRY_DATE = ENTRY_DATE;
         this.ASSIGNED_SOCIAL_ID = generateSocialID();
     }
@@ -28,6 +31,7 @@ public class DisasterVictim extends Person {
         if (!isValidDateFormat(ENTRY_DATE)) {
             throw new IllegalArgumentException("Invalid date format for entry date. Expected format: YYYY-MM-DD");
         }
+        this.dietaryRestrictions = EnumSet.noneOf(DietaryRestriction.class);
         this.ENTRY_DATE = ENTRY_DATE;
         this.ASSIGNED_SOCIAL_ID = generateSocialID();
         setGender(gender);
@@ -158,6 +162,18 @@ public class DisasterVictim extends Person {
         this.addPersonalBelonging(supply);
         // Remove the supply from the location's available supplies
         location.removeSupply(supply);
+    }
+
+    public EnumSet<DietaryRestriction> getDietaryRestrictions() {
+        return dietaryRestrictions;
+    }
+
+    public void addDietaryRestriction(DietaryRestriction restriction) {
+        dietaryRestrictions.add(restriction);
+    }
+
+    public void removeDietaryRestriction(DietaryRestriction restriction) {
+        dietaryRestrictions.remove(restriction);
     }
 
 }

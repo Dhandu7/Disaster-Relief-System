@@ -137,4 +137,30 @@ public class DisasterVictimTest {
         assertTrue("allocateSupply() should add the supply to the victim's personal belongings",
                 victim.getPersonalBelongings().contains(supply));
     }
+
+    @Test
+    public void testDefaultDietaryRestrictions() {
+        assertTrue("Default dietary restrictions should be empty", victim.getDietaryRestrictions().isEmpty());
+    }
+
+    @Test
+    public void testAddDietaryRestriction() {
+        victim.addDietaryRestriction(DietaryRestriction.DBML);
+        victim.addDietaryRestriction(DietaryRestriction.GFML);
+        assertTrue("Dietary restrictions should contain DBML",
+                victim.getDietaryRestrictions().contains(DietaryRestriction.DBML));
+        assertTrue("Dietary restrictions should contain GFML",
+                victim.getDietaryRestrictions().contains(DietaryRestriction.GFML));
+    }
+
+    @Test
+    public void testRemoveDietaryRestriction() {
+        victim.addDietaryRestriction(DietaryRestriction.DBML);
+        victim.addDietaryRestriction(DietaryRestriction.GFML);
+        victim.removeDietaryRestriction(DietaryRestriction.DBML);
+        assertFalse("Dietary restrictions should not contain DBML",
+                victim.getDietaryRestrictions().contains(DietaryRestriction.DBML));
+        assertTrue("Dietary restrictions should contain GFML",
+                victim.getDietaryRestrictions().contains(DietaryRestriction.GFML));
+    }
 }
