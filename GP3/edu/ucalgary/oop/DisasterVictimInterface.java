@@ -48,8 +48,12 @@ public class DisasterVictimInterface {
 
         DisasterVictim victim = new DisasterVictim(firstName, lastName, dateOfBirth, dateOfEntry);
 
-        System.out.println(
-                "\nSelect dietary restrictions (separate with comma, e.g., DBML, GFML):\n\nAVML Asian vegetarian meal\nDBML Diabetic meal\nGFML Gluten intolerant meal\nKSML Kosher meal\nLSML Low salt meal\nMOML Muslim meal\nPFML Peanut-free meal\nVGML Vegan meal\nVJML Vegetarian Jain meal");
+        System.out.println("\nSelect dietary restrictions (separate with comma, e.g., DBML, GFML):\n");
+
+        // Display dietary restriction options
+        System.out.println(DietaryRestriction.getDescriptions());
+
+        // Process user input for dietary restrictions
         String input = scanner.nextLine();
         String[] restrictions = input.split(",\\s*");
         for (String restriction : restrictions) {
