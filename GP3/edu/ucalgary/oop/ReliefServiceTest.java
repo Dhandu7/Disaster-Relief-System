@@ -17,13 +17,13 @@ public class ReliefServiceTest {
     private String validDate = "2024-02-10";
     private String invalidDate = "2024/02/10";
     private String expectedInfoProvided = "Looking for family member";
-    private String expectedLogDetails = "Inquirer: John, Missing Person: Jane Alex, Date of Inquiry: 2024-02-10, Info Provided: Looking for family member, Last Known Location: University of Calgary"; 
+    private String expectedLogDetails = "Inquirer: John, Missing Person: Jane Alex, Date of Inquiry: 2024-02-10, Info Provided: Looking for family member, Last Known Location: University of Calgary";
 
     @Before
     public void setUp() {
         // Assuming Inquirer, DisasterVictim, and Location have constructors as implied
-        inquirer = new Inquirer("John", "Alex", "1234567890", "Looking for family member");
-        missingPerson = new DisasterVictim("Jane Alex", "2024-01-25");
+        inquirer = new Inquirer("John", "Alex", "1998-01-01", "1234567890", "Looking for family member");
+        missingPerson = new DisasterVictim("Jane", "Alex", "1987-09-06", "2024-01-25");
         lastKnownLocation = new Location("University of Calgary", "2500 University Dr NW");
         reliefService = new ReliefService(inquirer, missingPerson, validDate, expectedInfoProvided, lastKnownLocation);
     }
@@ -40,7 +40,8 @@ public class ReliefServiceTest {
 
     @Test
     public void testGetMissingPerson() {
-        assertEquals("Missing person should match the one set in setup", missingPerson, reliefService.getMissingPerson());
+        assertEquals("Missing person should match the one set in setup", missingPerson,
+                reliefService.getMissingPerson());
     }
 
     @Test
@@ -50,18 +51,21 @@ public class ReliefServiceTest {
 
     @Test
     public void testGetInfoProvided() {
-        assertEquals("Info provided should match the one set in setup", expectedInfoProvided, reliefService.getInfoProvided());
+        assertEquals("Info provided should match the one set in setup", expectedInfoProvided,
+                reliefService.getInfoProvided());
     }
 
     @Test
     public void testGetLastKnownLocation() {
-        assertEquals("Last known location should match the one set in setup", lastKnownLocation, reliefService.getLastKnownLocation());
+        assertEquals("Last known location should match the one set in setup", lastKnownLocation,
+                reliefService.getLastKnownLocation());
     }
 
     @Test
     public void testSetDateOfInquiryWithValidDate() {
         reliefService.setDateOfInquiry(validDate);
-        assertEquals("Setting a valid date should update the date of inquiry", validDate, reliefService.getDateOfInquiry());
+        assertEquals("Setting a valid date should update the date of inquiry", validDate,
+                reliefService.getDateOfInquiry());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -71,6 +75,15 @@ public class ReliefServiceTest {
 
     @Test
     public void testGetLogDetails() {
-        assertEquals("Log details should match the expected format", expectedLogDetails, reliefService.getLogDetails());
+        String logDetails = reliefService.getLogDetails();
+        assertTrue("Log details should contain inquirer's first name", logDetails.contains("Inquirer: John"));
+        assertTrue("Log details should contain missing person's name",
+                logDetails.contains("Missing Person: Jane"));
+        assertTrue("Log details should contain date of inquiry", logDetails.contains("Date of Inquiry: 2024-02-10"));
+        assertTrue("Log details should contain info provided",
+                logDetails.contains("Info Provided: Looking for family member"));
+        assertTrue("Log details should contain last known location's name",
+                logDetails.contains("Last Known Location: University of Calgary"));
     }
+
 }

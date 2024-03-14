@@ -1,4 +1,5 @@
 package edu.ucalgary.oop;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,7 +11,8 @@ public class ReliefService {
     private Location lastKnownLocation;
 
     // Constructor
-    public ReliefService(Inquirer inquirer, DisasterVictim missingPerson, String dateOfInquiry, String infoProvided, Location lastKnownLocation) {
+    public ReliefService(Inquirer inquirer, DisasterVictim missingPerson, String dateOfInquiry, String infoProvided,
+            Location lastKnownLocation) {
         this.inquirer = inquirer;
         this.missingPerson = missingPerson;
         setDateOfInquiry(dateOfInquiry);
@@ -76,11 +78,13 @@ public class ReliefService {
             return false;
         }
     }
+
     public String getLogDetails() {
-       return "Inquirer: " + inquirer.getFirstName() + 
-           ", Missing Person: " + missingPerson.getFirstName() + 
-           ", Date of Inquiry: " + dateOfInquiry + 
-           ", Info Provided: " + infoProvided + 
-           ", Last Known Location: " + lastKnownLocation.getName();
-}
+        return "Inquirer: " + inquirer.getFirstName() +
+                ", Missing Person: " + missingPerson.getFirstName() +
+                ", Date of Inquiry: " + dateOfInquiry +
+                ", Info Provided: " + infoProvided +
+                ", Last Known Location: " + lastKnownLocation.getName();
+    }
+
 }
