@@ -53,3 +53,38 @@ INSERT INTO INQUIRY_LOG (id, inquirer, callDate, details) VALUES
 (8, 3, '2024-03-03', 'Melinda'),
 (9, 6, '2024-03-04', 'Julius');
 
+CREATE TABLE DISASTERVICTIM (
+    first_name VARCHAR(150),
+    last_name VARCHAR(150),
+    date VARCHAR(150)
+);
+
+INSERT INTO DISASTERVICTIM (first_name, last_name, date) VALUES
+('Aaryan', 'Dhand', 2022-02-02),
+('Raju', 'Singham', 2023-09-09),
+('Adeeb','Hoss', 2017-01-15); 
+
+CREATE TABLE FAMILYRELATION (
+    first_name1 VARCHAR(150),
+    last_name1 VARCHAR(150),
+    first_name2 VARCHAR(150),
+    last_name2 VARCHAR(150),
+    relationship_type VARCHAR(150)
+);
+
+INSERT INTO FAMILYRELATION (first_name1, last_name1, first_name2, last_name2, relationship_type) VALUES
+('Aaryan', 'Dhand', 'Raju', 'Singham', 'son');
+
+CREATE TABLE MEDICALRECORD (
+    location_name VARCHAR(150),
+    first_name VARCHAR(150),
+    last_name VARCHAR(150),
+    treatment_detail VARCHAR(150),
+    date_of_treatment VARCHAR(150)
+);
+
+
+INSERT INTO MEDICALRECORD (location_name,first_name,last_name, treatment_detail, date_of_treatment) VALUES
+('Rajvir Medical Clinic','Aaryan','Dhand', 'stubbedtoe', 2012-03-22),
+('Rajvir Medical Clinic','Raju', 'Singham', 'headache', 2023-09-12),
+('Gulab Relief Center','Adeeb', 'Hoss', 'brokennose', 2007-11-02);

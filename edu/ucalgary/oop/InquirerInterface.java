@@ -3,6 +3,7 @@ package edu.ucalgary.oop;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class InquirerInterface {
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,7 +32,7 @@ public class InquirerInterface {
 
             switch (choice) {
                 case 1:
-                    logInquiry();
+                    enterInquiryLog();
                     break;
                 case 2:
                     System.out.println("\nEnter part of the name to search for locally: ");
@@ -59,12 +60,26 @@ public class InquirerInterface {
         }
     }
 
-    public static void logInquiry() {
-        System.out.println("\nLog Inquiry:");
-        System.out.print("Inquirer Name: ");
-        String inquirerName = scanner.nextLine();
+    public static void enterInquiryLog() {
+        try {
+            Date currentDate = new Date();
+            // Convert the current date to java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
 
-        dbInstance.logInquiry(inquirerName);
+            int id = dbInstance.getLastInquiryId() + 1;
+
+            System.out.print("Enter Inquirer (ID): ");
+            int inquirer = Integer.parseInt(scanner.nextLine());
+            System.out.print("Enter Details: ");
+            String details = scanner.nextLine();
+
+            dbInstance.logInquiry(id, inquirer, sqlDate, details);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input for inquirer ID. Please enter a valid integer.");
+        } catch (SQLException e) {
+            System.err.println("Failed to get last inquirer ID:");
+            e.printStackTrace();
+        }
     }
 
     public static void searchDisasterVictimsLocally(String searchQueryLocal) {

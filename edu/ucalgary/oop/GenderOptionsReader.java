@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenderOptionsReader {
-    private static final String FILE_PATH = "GenderOptions.txt";
+    private static final String FILE_PATH = "/Users/aaryan/Desktop/ENSF380_IP/edu/ucalgary/oop/GenderOptions.txt";
     private List<String> genderOptions;
 
     public GenderOptionsReader() {

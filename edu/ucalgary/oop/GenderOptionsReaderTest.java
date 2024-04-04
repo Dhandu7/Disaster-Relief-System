@@ -30,6 +30,6 @@ public class GenderOptionsReaderTest {
         assertNotNull(genderOptions);
         // Check that the size of the list matches the expected number of genders in the
         // file
-        assertEquals(3, genderOptions.size()); // Change 3 to the expected size
+        assertEquals(7, genderOptions.size()); // Change 3 to the expected size
     }
 }
