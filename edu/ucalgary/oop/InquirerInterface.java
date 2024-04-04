@@ -1,12 +1,20 @@
 package edu.ucalgary.oop;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.sql.SQLException;
 
 public class InquirerInterface {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final List<DisasterVictim> victims = new ArrayList<>();
+    private static final database dbInstance;
+
+    static {
+        try {
+            dbInstance = new database();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to initialize database connection.", e);
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Disaster Victim Information System");
@@ -37,6 +45,12 @@ public class InquirerInterface {
                     break;
                 case 4:
                     System.out.println("Exiting program...");
+                    try {
+                        dbInstance.close();
+                    } catch (SQLException e) {
+                        System.err.println("Failed to close database connection:");
+                        e.printStackTrace();
+                    }
                     System.exit(0);
                     break;
                 default:
@@ -50,33 +64,23 @@ public class InquirerInterface {
         System.out.print("Inquirer Name: ");
         String inquirerName = scanner.nextLine();
 
-        // You can capture additional details such as contact information, nature of
-        // inquiry, etc.
-
-        // Log the inquiry (could be stored in a database or printed to console)
-        System.out.println("Inquiry logged successfully.");
+        dbInstance.logInquiry(inquirerName);
     }
 
     public static void searchDisasterVictimsLocally(String searchQueryLocal) {
         System.out.println("\nSearch Disaster Victims Locally:");
 
-        // Perform search based on the search query locally
-        List<DisasterVictim> searchResults = new ArrayList<>();
-        for (DisasterVictim victim : victims) {
-            if (victim.getFirstName().toLowerCase().contains(searchQueryLocal) ||
-                    victim.getLastName().toLowerCase().contains(searchQueryLocal)) {
-                searchResults.add(victim);
-            }
-        }
+        System.out.println("Enter location for the search: ");
+        String location = scanner.nextLine();
 
-        // Display search results
+        List<String> searchResults = dbInstance.searchDisasterVictimsLocally(searchQueryLocal, location);
+
         if (searchResults.isEmpty()) {
-            System.out.println("No matching Disaster Victims found locally.");
+            System.out.println("No matching Disaster Victims found locally in the specified location.");
         } else {
-            System.out.println("Matching Disaster Victims Locally:");
-            for (DisasterVictim victim : searchResults) {
-                System.out.println(victim.getFirstName() + " " + victim.getLastName());
-                // You can display additional information about each victim if needed
+            System.out.println("Matching Disaster Victims Locally in the specified location:");
+            for (String victim : searchResults) {
+                System.out.println(victim);
             }
         }
     }
@@ -84,7 +88,15 @@ public class InquirerInterface {
     public static void searchDisasterVictimsCentrally(String searchQueryCentral) {
         System.out.println("\nSearch Disaster Victims Centrally:");
 
-        // Perform search based on the search query centrally
-        // Implement central search logic here
+        List<String> searchResults = dbInstance.searchDisasterVictimsCentrally(searchQueryCentral);
+
+        if (searchResults.isEmpty()) {
+            System.out.println("No matching Disaster Victims found centrally.");
+        } else {
+            System.out.println("Matching Disaster Victims Centrally:");
+            for (String victim : searchResults) {
+                System.out.println(victim);
+            }
+        }
     }
 }

@@ -1,9 +1,19 @@
 package edu.ucalgary.oop;
 
 import java.util.Scanner;
+import java.sql.SQLException;
 
 public class DisasterVictimInterface {
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+    private static database dbInstance;
+
+    static {
+        try {
+            dbInstance = new database();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to initialize database connection.", e);
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Disaster Victim Information System");
@@ -11,7 +21,9 @@ public class DisasterVictimInterface {
         while (true) {
             System.out.println("\nSelect an option:");
             System.out.println("1. Enter new Disaster Victim");
-            System.out.println("2. Exit");
+            System.out.println("2. Enter new Family Connection");
+            System.out.println("3. Enter new Medical Record");
+            System.out.println("4. Exit");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -22,9 +34,24 @@ public class DisasterVictimInterface {
                     break;
 
                 case 2:
+                    enterFamilyRelation();
+                    break;
+
+                case 3:
+                    enterMedicalRecord();
+                    break;
+
+                case 4:
                     System.out.println("Exiting program...");
+                    try {
+                        dbInstance.close();
+                    } catch (SQLException e) {
+                        System.err.println("Failed to close database connection:");
+                        e.printStackTrace();
+                    }
                     System.exit(0);
                     break;
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
@@ -43,83 +70,49 @@ public class DisasterVictimInterface {
         System.out.print("Date of Birth (YYYY-MM-DD): ");
         String dateOfBirth = scanner.nextLine();
 
-        System.out.print("Date of Entry (YYYY-MM-DD): ");
-        String dateOfEntry = scanner.nextLine();
+        dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth);
 
-        DisasterVictim victim = new DisasterVictim(firstName, lastName, dateOfBirth, dateOfEntry);
+    }
 
-        System.out.println("\nSelect dietary restrictions (separate with comma, e.g., DBML, GFML):\n");
+    public static void enterFamilyRelation() {
+        System.out.println("\nEnter details for Person 1:");
+        System.out.print("First Name: ");
+        String victimfirstName = scanner.nextLine();
 
-        // Display dietary restriction options
-        System.out.println(DietaryRestriction.getDescriptions());
+        System.out.print("Last Name: ");
+        String victimlastName = scanner.nextLine();
 
-        // Process user input for dietary restrictions
-        String input = scanner.nextLine();
-        String[] restrictions = input.split(",\\s*");
-        for (String restriction : restrictions) {
-            try {
-                victim.addDietaryRestriction(DietaryRestriction.valueOf(restriction.toUpperCase()));
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid dietary restriction: " + restriction);
-            }
-        }
-        System.out.println("Dietary restrictions updated: " + victim.getDietaryRestrictions());
+        System.out.println("\nEnter details for Person 2:");
+        System.out.print("First Name: ");
+        String relationfirstName = scanner.nextLine();
 
-        System.out.println("\nDisaster Victim entered successfully:");
-        System.out.println("Name: " + victim.getFirstName() + " " + victim.getLastName());
-        System.out.println("Date of Birth: " + victim.getDateOfBirth());
-        System.out.println("Date of Entry: " + victim.getEntryDate());
+        System.out.print("Last Name: ");
+        String relationlastName = scanner.nextLine();
 
-        // Enter medical record
-        System.out.println("\nEnter details for the new Medical Record:");
-
-        System.out.print("Location Name: ");
-        String locationName = scanner.nextLine();
-
-        System.out.print("Treatment Details: ");
-        String treatmentDetails = scanner.nextLine();
-
-        System.out.print("Date of Treatment (YYYY-MM-DD): ");
-        String dateOfTreatment = scanner.nextLine();
-
-        try {
-            MedicalRecord medicalRecord = new MedicalRecord(new Location(locationName, ""), treatmentDetails,
-                    dateOfTreatment);
-            victim.addMedicalRecord(medicalRecord);
-            System.out.println("\nMedical Record added successfully:");
-            System.out.println("Location: " + medicalRecord.getLocation().getName());
-            System.out.println("Treatment Details: " + medicalRecord.getTreatmentDetails());
-            System.out.println("Date of Treatment: " + medicalRecord.getDateOfTreatment());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        // Enter relationships
-        System.out.println("\nEnter details for the new Relationship:");
-
-        System.out.print("Related Person's First Name: ");
-        String relatedFirstName = scanner.nextLine();
-
-        System.out.print("Related Person's Last Name: ");
-        String relatedLastName = scanner.nextLine();
-
-        System.out.print("Relationship to Victim: ");
+        System.out.print("Relation: ");
         String relationship = scanner.nextLine();
 
-        try {
-            DisasterVictim relatedPerson = new DisasterVictim(relatedFirstName, relatedLastName, "", "");
-            FamilyRelation familyRelation = new FamilyRelation(victim, relationship, relatedPerson);
-            victim.addFamilyConnection(familyRelation);
-            System.out.println("\nRelationship added successfully:");
-            System.out.println("Related Person: " + relatedPerson.getFirstName() + " " + relatedPerson.getLastName());
-            System.out.println("Relationship to Victim: " + familyRelation.getRelationshipTo());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        dbInstance.addFamilyRelation(victimfirstName, victimlastName, relationfirstName, relationlastName,
+                relationship);
+    }
+
+    public static void enterMedicalRecord() {
+        System.out.println("\nEnter the details of treatment:");
+        System.out.print("Location: ");
+        String locationName = scanner.nextLine();
+
+        System.out.print("Treatment: ");
+        String treatment_detail = scanner.nextLine();
+
+        System.out.print("Date of Treatment: ");
+        String date_of_treatment = scanner.nextLine();
+
+        dbInstance.addMedicalRecord(locationName, treatment_detail, date_of_treatment);
     }
 
     public static boolean isValidDateFormat(String date) {
         String dateFormatPattern = "^\\d{4}-\\d{2}-\\d{2}$";
         return date.matches(dateFormatPattern);
     }
+
 }
