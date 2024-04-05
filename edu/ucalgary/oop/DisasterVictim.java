@@ -11,6 +11,7 @@ public class DisasterVictim extends Person {
     private ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
     private ArrayList<Supply> personalBelongings;
     private final String ENTRY_DATE;
+    private static final List<String> GENDER_OPTIONS = GenderOptionsReader.getGenderOptions();
     private String gender;
     private String comments;
     private EnumSet<DietaryRestriction> dietaryRestrictions;
@@ -139,22 +140,11 @@ public class DisasterVictim extends Person {
     }
 
     public void setGender(String gender) {
-        GenderOptionsReader genderOptionsInstance = new GenderOptionsReader();
-        List<String> genderOptions = genderOptionsInstance.getGenderOptions();
-        String normalizedGender = gender.toLowerCase();
-
-        // Normalize gender options to lowercase
-        List<String> normalizedOptions = new ArrayList<>();
-        for (String option : genderOptions) {
-            normalizedOptions.add(option.toLowerCase());
+        if (GENDER_OPTIONS.contains(gender.toLowerCase())) {
+            this.gender = gender.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("Invalid gender option: " + gender);
         }
-
-        if (!normalizedOptions.contains(normalizedGender)) {
-            throw new IllegalArgumentException(
-                    "Invalid gender. Acceptable values are: " + String.join(", ", genderOptions));
-        }
-
-        this.gender = normalizedGender;
     }
 
     public void allocateSupply(Supply supply, Location location) {

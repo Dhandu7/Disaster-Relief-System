@@ -2,6 +2,9 @@ package edu.ucalgary.oop;
 
 import java.util.Scanner;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class DisasterVictimInterface {
     private static Scanner scanner = new Scanner(System.in);
@@ -101,18 +104,33 @@ public class DisasterVictimInterface {
         System.out.print("Location: ");
         String locationName = scanner.nextLine();
 
+        System.out.print("First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String lastName = scanner.nextLine();
+
         System.out.print("Treatment: ");
         String treatment_detail = scanner.nextLine();
 
         System.out.print("Date of Treatment: ");
         String date_of_treatment = scanner.nextLine();
 
-        dbInstance.addMedicalRecord(locationName, treatment_detail, date_of_treatment);
+        dbInstance.addMedicalRecord(locationName, firstName, lastName, treatment_detail, date_of_treatment);
     }
 
     public static boolean isValidDateFormat(String date) {
-        String dateFormatPattern = "^\\d{4}-\\d{2}-\\d{2}$";
-        return date.matches(dateFormatPattern);
+        try {
+            // Parse the date string
+            LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+
+            // Check if the parsed date matches the input date
+            // This ensures that the year, month, and day values are valid
+            return parsedDate.toString().equals(date);
+        } catch (DateTimeParseException e) {
+            // Parsing failed, return false
+            return false;
+        }
     }
 
 }

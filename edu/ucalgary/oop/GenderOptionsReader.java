@@ -26,7 +26,16 @@ public class GenderOptionsReader {
         }
     }
 
-    public List<String> getGenderOptions() {
+    public static List<String> getGenderOptions() {
+        List<String> genderOptions = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                genderOptions.add(line.trim());
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading gender options file: " + e.getMessage());
+        }
         return genderOptions;
     }
 }

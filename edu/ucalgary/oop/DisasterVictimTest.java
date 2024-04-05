@@ -37,7 +37,7 @@ public class DisasterVictimTest {
         assertEquals(lastName, victim.getLastName());
         assertEquals(dateOfBirth, victim.getDateOfBirth());
         assertEquals(entryDate, victim.getEntryDate());
-        assertEquals(gender, victim.getGender());
+        assertEquals(gender.toLowerCase(), victim.getGender()); // Ensure gender is lowercase
     }
 
     @Test
