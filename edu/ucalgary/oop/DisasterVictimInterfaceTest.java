@@ -40,6 +40,11 @@ public class DisasterVictimInterfaceTest {
         String input = "John\nDoe\nJane\nDoe\nSibling\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
+        // Redirect output stream to capture printed messages
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Call the method to be tested
         DisasterVictimInterface.enterFamilyRelation();
 
         // Test output

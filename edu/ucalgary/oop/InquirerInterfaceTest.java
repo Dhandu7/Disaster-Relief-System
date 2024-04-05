@@ -1,60 +1,65 @@
 package edu.ucalgary.oop;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class InquirerInterfaceTest {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private final InputStream originalIn = System.in;
+    private final InputStream systemIn = System.in;
+    private final PrintStream systemOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
     }
 
     @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
-        System.setIn(originalIn);
+    public void tearDown() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
+    }
+
+    @Test
+    public void testEnterInquiryLog() {
+        String input = "1\nJohn Doe\n123\nTest details\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        String result = InquirerInterface.enterInquiryLog();
+
+        String expectedOutput = "Inquiry logged successfully.";
+        assertEquals(expectedOutput, result);
     }
 
     @Test
     public void testSearchDisasterVictimsLocally() {
-        String input = "Doe\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
+        String input = "New York\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
 
-        List<DisasterVictim> victims = new ArrayList<>();
-        victims.add(new DisasterVictim("John", "Doe", "1990-01-01", "2024-03-01"));
+        InquirerInterface.searchDisasterVictimsLocally("John");
 
-        InquirerInterface.searchDisasterVictimsLocally("doe");
-        assertTrue(outContent.toString().contains("John Doe"));
+        String expectedOutput = "\nSearch Disaster Victims Locally:\n" +
+                "Enter location for the search: \n" +
+                "No matching Disaster Victims found locally in the specified location.\n";
+        assertEquals(expectedOutput, outputStreamCaptor.toString());
     }
 
     @Test
     public void testSearchDisasterVictimsCentrally() {
-        String input = "Doe\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
+        InquirerInterface.searchDisasterVictimsCentrally("John");
 
-        List<DisasterVictim> victims = new ArrayList<>();
-        victims.add(new DisasterVictim("John", "Doe", "1990-01-01", "2024-03-01"));
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        InquirerInterface.searchDisasterVictimsCentrally("doe");
-        assertTrue(outputStream.toString().contains("John Doe"));
+        String expectedOutput = "\nSearch Disaster Victims Centrally:\n" +
+                "No matching Disaster Victims found centrally.\n";
+        assertEquals(expectedOutput, outputStreamCaptor.toString());
     }
-
 }

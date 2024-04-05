@@ -60,7 +60,7 @@ public class InquirerInterface {
         }
     }
 
-    public static void enterInquiryLog() {
+    public static String enterInquiryLog() {
         try {
             Date currentDate = new Date();
             // Convert the current date to java.sql.Date
@@ -74,11 +74,12 @@ public class InquirerInterface {
             String details = scanner.nextLine();
 
             dbInstance.logInquiry(id, inquirer, sqlDate, details);
+
+            return "Inquiry logged successfully.";
         } catch (NumberFormatException e) {
-            System.err.println("Invalid input for inquirer ID. Please enter a valid integer.");
+            return "Invalid input for inquirer ID. Please enter a valid integer.";
         } catch (SQLException e) {
-            System.err.println("Failed to get last inquirer ID:");
-            e.printStackTrace();
+            return "Failed to get last inquirer ID.";
         }
     }
 

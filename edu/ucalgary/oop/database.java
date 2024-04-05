@@ -114,9 +114,14 @@ public class database implements AutoCloseable {
     public List<String> searchDisasterVictimsLocally(String searchQueryLocal, String location) {
         List<String> searchResults = new ArrayList<>();
         try (PreparedStatement preparedStatement = dbConnect.prepareStatement(
-                "SELECT first_name, last_name FROM DISASTERVICTIM WHERE (lower(first_name) LIKE ? OR lower(last_name) LIKE ?)")) {
-            preparedStatement.setString(1, "%" + searchQueryLocal + "%");
-            preparedStatement.setString(2, "%" + searchQueryLocal + "%");
+                "SELECT DISTINCT dv.first_name, dv.last_name " +
+                        "FROM DISASTERVICTIM dv " +
+                        "JOIN MEDICALRECORD mr ON dv.first_name = mr.first_name AND dv.last_name = mr.last_name " +
+                        "WHERE (LOWER(dv.first_name) LIKE ? OR LOWER(dv.last_name) LIKE ?) " +
+                        "AND LOWER(mr.location_name) = ?")) {
+            preparedStatement.setString(1, "%" + searchQueryLocal.toLowerCase() + "%");
+            preparedStatement.setString(2, "%" + searchQueryLocal.toLowerCase() + "%");
+            preparedStatement.setString(3, location.toLowerCase());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     String firstName = resultSet.getString("first_name");
