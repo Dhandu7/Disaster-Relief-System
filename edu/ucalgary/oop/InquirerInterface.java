@@ -23,8 +23,8 @@ public class InquirerInterface {
         while (true) {
             System.out.println("\nSelect an option:");
             System.out.println("1. Log Inquiry");
-            System.out.println("2. Search Disaster Victims Locally");
-            System.out.println("3. Search Disaster Victims Centrally");
+            System.out.println("2. Enter as Local Inquirer");
+            System.out.println("3. Enter as Central Inquirer");
             System.out.println("4. Exit");
 
             int choice = scanner.nextInt();
@@ -35,14 +35,10 @@ public class InquirerInterface {
                     enterInquiryLog();
                     break;
                 case 2:
-                    System.out.println("\nEnter part of the name to search for locally: ");
-                    String searchQueryLocal = scanner.nextLine().toLowerCase();
-                    searchDisasterVictimsLocally(searchQueryLocal);
+                    localInquirerInterface();
                     break;
                 case 3:
-                    System.out.println("\nEnter part of the name to search for centrally: ");
-                    String searchQueryCentral = scanner.nextLine().toLowerCase();
-                    searchDisasterVictimsCentrally(searchQueryCentral);
+                    centralInquirerInterface();
                     break;
                 case 4:
                     System.out.println("Exiting program...");
@@ -60,7 +56,69 @@ public class InquirerInterface {
         }
     }
 
-    public static String enterInquiryLog() {
+    public static void localInquirerInterface() {
+        while (true) {
+            System.out.println("\nSelect an option:");
+            System.out.println("1. Search Disaster Victims Locally");
+            System.out.println("2. Add Disaster Victim");
+            System.out.println("3. Add Family Relation");
+            System.out.println("4. Add Medical Record");
+            System.out.println("5. Go Back");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nEnter part of the name to search for locally: ");
+                    String searchQueryLocal = scanner.nextLine().toLowerCase();
+                    searchDisasterVictimsLocally(searchQueryLocal);
+                    break;
+                case 2:
+                    enterDisasterVictim();
+                    break;
+                case 3:
+                    enterFamilyRelation();
+                    break;
+                case 4:
+                    enterMedicalRecord();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    public static void centralInquirerInterface() {
+        while (true) {
+            System.out.println("\nSelect an option:");
+            System.out.println("1. Search Disaster Victims Centrally");
+            System.out.println("2. Log Inquiry");
+            System.out.println("3. Go Back");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nEnter part of the name to search for centrally: ");
+                    String searchQueryCentral = scanner.nextLine().toLowerCase();
+                    searchDisasterVictimsCentrally(searchQueryCentral);
+                    break;
+                case 2:
+                    enterInquiryLog();
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    public static void enterInquiryLog() {
         try {
             Date currentDate = new Date();
             // Convert the current date to java.sql.Date
@@ -75,11 +133,12 @@ public class InquirerInterface {
 
             dbInstance.logInquiry(id, inquirer, sqlDate, details);
 
-            return "Inquiry logged successfully.";
+            System.out.println("Inquiry logged successfully.");
         } catch (NumberFormatException e) {
-            return "Invalid input for inquirer ID. Please enter a valid integer.";
+            System.err.println("Invalid input for inquirer ID. Please enter a valid integer.");
         } catch (SQLException e) {
-            return "Failed to get last inquirer ID.";
+            System.err.println("Failed to get last inquirer ID.");
+            e.printStackTrace();
         }
     }
 
@@ -114,5 +173,63 @@ public class InquirerInterface {
                 System.out.println(victim);
             }
         }
+    }
+
+    public static void enterDisasterVictim() {
+        System.out.println("\nEnter details for the new Disaster Victim:");
+
+        System.out.print("First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Date of Birth (YYYY-MM-DD): ");
+        String dateOfBirth = scanner.nextLine();
+
+        dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth);
+
+    }
+
+    public static void enterFamilyRelation() {
+        System.out.println("\nEnter details for Person 1:");
+        System.out.print("First Name: ");
+        String victimfirstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String victimlastName = scanner.nextLine();
+
+        System.out.println("\nEnter details for Person 2:");
+        System.out.print("First Name: ");
+        String relationfirstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String relationlastName = scanner.nextLine();
+
+        System.out.print("Relation: ");
+        String relationship = scanner.nextLine();
+
+        dbInstance.addFamilyRelation(victimfirstName, victimlastName, relationfirstName, relationlastName,
+                relationship);
+    }
+
+    public static void enterMedicalRecord() {
+        System.out.println("\nEnter the details of treatment:");
+        System.out.print("Location: ");
+        String locationName = scanner.nextLine();
+
+        System.out.print("First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Last Name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Treatment: ");
+        String treatment_detail = scanner.nextLine();
+
+        System.out.print("Date of Treatment: ");
+        String date_of_treatment = scanner.nextLine();
+
+        dbInstance.addMedicalRecord(locationName, firstName, lastName, treatment_detail, date_of_treatment);
     }
 }

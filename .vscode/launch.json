@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "DisasterVictimInterface",
+            "request": "launch",
+            "mainClass": "edu.ucalgary.oop.DisasterVictimInterface",
+            "projectName": "ENSF380_IP_96d10cf"
+        },
+        {
+            "type": "java",
+            "name": "InquirerInterface",
+            "request": "launch",
+            "mainClass": "edu.ucalgary.oop.InquirerInterface",
+            "projectName": "ENSF380_IP_96d10cf"
+        }
+    ]
+}
