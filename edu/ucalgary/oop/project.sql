@@ -59,10 +59,12 @@ CREATE TABLE DISASTERVICTIM (
     date VARCHAR(150)
 );
 
-INSERT INTO DISASTERVICTIM (first_name, last_name, date) VALUES
-('Aaryan', 'Dhand', 2022-02-02),
-('Raju', 'Singham', 2023-09-09),
-('Adeeb','Hoss', 2017-01-15); 
+INSERT INTO DISASTERVICTIM (first_name, last_name, birth_date) VALUES
+('Aaryan', 'Dhand', '2022-02-02'),
+('Raju', 'Singham', '2023-09-09'),
+('Adeeb','Hoss', '2017-01-15'),
+('Arvin','Randy', '2019-02-13'),
+('Satwant','Tiwanna', '1892-02-29'); 
 
 CREATE TABLE FAMILYRELATION (
     first_name1 VARCHAR(150),
@@ -73,7 +75,9 @@ CREATE TABLE FAMILYRELATION (
 );
 
 INSERT INTO FAMILYRELATION (first_name1, last_name1, first_name2, last_name2, relationship_type) VALUES
-('Aaryan', 'Dhand', 'Raju', 'Singham', 'son');
+('Aaryan', 'Dhand', 'Raju', 'Singham', 'son'),
+('Satwant', 'Tiwanna', 'Arvin', 'Randy', 'son'),
+('Arvin', 'Randy', 'Adeeb', 'Hoss', 'brother');
 
 CREATE TABLE MEDICALRECORD (
     location_name VARCHAR(150),
@@ -85,6 +89,8 @@ CREATE TABLE MEDICALRECORD (
 
 
 INSERT INTO MEDICALRECORD (location_name,first_name,last_name, treatment_detail, date_of_treatment) VALUES
-('Rajvir Medical Clinic','Aaryan','Dhand', 'stubbedtoe', 2012-03-22),
-('Rajvir Medical Clinic','Raju', 'Singham', 'headache', 2023-09-12),
-('Gulab Relief Center','Adeeb', 'Hoss', 'brokennose', 2007-11-02);
+('Rajvir Medical Clinic','Aaryan','Dhand', 'stubbedtoe', '2012-03-22'),
+('Rajvir Medical Clinic','Raju', 'Singham', 'headache', '2023-09-12'),
+('Gulab Relief Center','Adeeb', 'Hoss', 'brokennose', '2007-11-02'),
+('Gulab Relief Center','Arvin', 'Randy', 'died', '2024-02-11'),
+('Gulab Relief Center','Satwant', 'Tiwanna', 'rejectedbycrush', '2023-02-22');

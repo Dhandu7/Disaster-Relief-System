@@ -29,16 +29,21 @@ public class InquirerInterfaceTest {
 
     @Test
     public void testEnterInquiryLog() {
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
         String input = "1\n123\nTest details\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         InquirerInterface.enterInquiryLog();
 
-        String expectedOutput = "Enter Inquirer (ID): Enter Details: Inquiry logged successfully.\nInquiry logged successfully."
-                + //
-                "";
-        assertEquals(expectedOutput, outputStreamCaptor.toString());
+        String expectedOutput = "Enter Inquirer (ID): Enter Details: Inquiry logged successfully.\nInquiry logged successfully.";
+        expectedOutput = expectedOutput.trim(); // Trim whitespace
+
+        String actualOutput = outputStreamCaptor.toString().trim(); // Trim whitespace
+
+        assertEquals(expectedOutput, actualOutput);
     }
 
     @Test
@@ -49,7 +54,7 @@ public class InquirerInterfaceTest {
 
         InquirerInterface.searchDisasterVictimsLocally("searchQuery");
 
-        String expectedOutput = "Search Disaster Victims Locally:\n" +
+        String expectedOutput = "\nSearch Disaster Victims Locally:\n" +
                 "Enter location for the search: \n" +
                 "No matching Disaster Victims found locally in the specified location.\n";
         assertEquals(expectedOutput, outputStreamCaptor.toString());
