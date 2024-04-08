@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenderOptionsReader {
-    private static final String FILE_PATH = "edu/ucalgary/oop/GenderOptions.txt";
+    private static final String FILE_PATH = "edu/ucalgary/oop/GenderOptions.txt"; // since edu is treated as the source
+                                                                                  // directory, no need to change file
+                                                                                  // path for mac and windows as txt
+                                                                                  // file is contained within the repo
+                                                                                  // folder
     List<String> genderOptions;
 
     public GenderOptionsReader() {

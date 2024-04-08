@@ -24,13 +24,25 @@ public class DisasterVictimInterfaceTest {
     @Test
     public void testEnterDisasterVictim() throws SQLException {
         // Prepare input for the test
-        String input = "John\nDoe\n1990-01-01\n";
+        String input = "John\nDoe\n1990-01-01\n \n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         DisasterVictimInterface.enterDisasterVictim();
 
         // Test output
-        String expectedOutput = "\nEnter details for the new Disaster Victim:\nFirst Name: Last Name: Date of Birth (YYYY-MM-DD): Disaster victim added successfully.\n";
+        String expectedOutput = "\nEnter details for the new Disaster Victim:\nFirst Name: Last Name: Date of Birth (YYYY-MM-DD): AVML - Asian vegetarian meal\n"
+                + //
+                "DBML - Diabetic meal\n" + //
+                "GFML - Gluten intolerant meal\n" + //
+                "KSML - Kosher meal\n" + //
+                "LSML - Low salt meal\n" + //
+                "MOML - Muslim meal\n" + //
+                "PFML - Peanut-free meal\n" + //
+                "VGML - Vegan meal\n" + //
+                "VJML - Vegetarian Jain meal\n" + //
+                "Dietary Restrictions (separate with comma and use abbreviations) -- leave blank for none:Disaster victim added successfully.\n"
+                + //
+                "Disaster victim added successfully.\n";
         assertEquals(expectedOutput, outputStream.toString());
     }
 

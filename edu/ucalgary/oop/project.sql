@@ -4,13 +4,12 @@
  commands form this file, (b) removing the first three lines of commands from this file, and
  (c) \i 'path_to_file\project.sql' (with appropriate use of \ or / based on OS).
 
- During grading, TAs will assume that these two tables exist, but will enter different values.
- Thus you cannot assume that any of the values provided here exist, but you can assume the tables
- exist.
+ USER INSTRUCTIONS:
+ Run the first 3 lines of the code to delete and then intialize the database
 
- You may optionally create additional tables in the ensf380project database with demonstration 
- data, provided that you provide the information in a valid SQL file which TAs can import and
- clearly include this information in your instructions.
+ Then the remainder of the code can be copy/pasted in order to intitialize and populate all tables
+
+ ( ͡° ͜ʖ ͡°) thanks
  */
 
 
