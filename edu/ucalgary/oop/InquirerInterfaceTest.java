@@ -73,5 +73,69 @@ public class InquirerInterfaceTest {
         assertEquals(expectedOutput, outputStreamCaptor.toString());
     }
 
-    // Add more test cases for other methods as needed
+    @Test
+    public void testLocalInquirerInterface() {
+        String input = "5\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        InquirerInterface.localInquirerInterface();
+
+        String expectedOutput = "\nSelect an option:\n" +
+                "1. Search Disaster Victims Locally\n" +
+                "2. Add Disaster Victim\n" +
+                "3. Add Family Relation\n" +
+                "4. Add Medical Record\n" +
+                "5. Go Back\n";
+        assertEquals(expectedOutput, outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCentralInquirerInterface() {
+        String input = "3\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        InquirerInterface.centralInquirerInterface();
+
+        String expectedOutput = "\nSelect an option:\n" +
+                "1. Search Disaster Victims Centrally\n" +
+                "2. Log Inquiry\n" +
+                "3. Go Back\n";
+        assertEquals(expectedOutput, outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testEnterDisasterVictim() {
+        String input = "John\nDoe\n2000-01-01\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        InquirerInterface.enterDisasterVictim();
+
+        // Assert the output if needed
+    }
+
+    @Test
+    public void testEnterFamilyRelation() {
+        String input = "VictimFirstName\nVictimLastName\nRelationFirstName\nRelationLastName\nRelationship\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        InquirerInterface.enterFamilyRelation();
+
+        // Assert the output if needed
+    }
+
+    @Test
+    public void testEnterMedicalRecord() {
+        String input = "Location\nFirstName\nLastName\nTreatmentDetail\nDateOfTreatment\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        InquirerInterface.enterMedicalRecord();
+
+        // Assert the output if needed
+    }
+
 }

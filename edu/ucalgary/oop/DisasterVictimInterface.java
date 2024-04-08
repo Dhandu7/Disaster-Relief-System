@@ -73,11 +73,16 @@ public class DisasterVictimInterface {
         System.out.print("Date of Birth (YYYY-MM-DD): ");
         String dateOfBirth = scanner.nextLine();
 
-        dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth);
+        System.out.print(DietaryRestriction.getDescriptions());
+        System.out.print("Dietary Restrictions (separate with comma and use abbreviations) -- leave blank for none:");
+        String dietaryRestrictions = scanner.nextLine();
 
+        dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth, dietaryRestrictions);
     }
 
     public static void enterFamilyRelation() {
+
+        dbInstance.printDisasterVictimTable();
         System.out.println("\nEnter details for Person 1:");
         System.out.print("First Name: ");
         String victimfirstName = scanner.nextLine();

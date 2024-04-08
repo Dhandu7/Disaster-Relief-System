@@ -20,6 +20,12 @@ public class Person {
         this.age = ageCalculation(dateOfBirth);
     }
 
+    public Person(String firstName, String lastName, int age) throws IllegalArgumentException {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
     private static boolean isValidDateFormat(String date) {
         String dateFormatPattern = "^\\d{4}-\\d{2}-\\d{2}$";
         return date.matches(dateFormatPattern);

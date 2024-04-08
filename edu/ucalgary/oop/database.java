@@ -36,12 +36,13 @@ public class database implements AutoCloseable {
         }
     }
 
-    public void addDisasterVictim(String firstName, String lastName, String dateOfBirth) {
+    public void addDisasterVictim(String firstName, String lastName, String dateOfBirth, String dietaryRestrictions) {
         try (PreparedStatement preparedStatement = dbConnect.prepareStatement(
-                "INSERT INTO disastervictim (first_name, last_name, birth_date) VALUES (?, ?, ?)")) {
+                "INSERT INTO disastervictim (first_name, last_name, birth_date, dietary_restrictions) VALUES (?, ?, ?, ?)")) {
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, dateOfBirth);
+            preparedStatement.setString(4, dietaryRestrictions);
             preparedStatement.executeUpdate();
             System.out.println("Disaster victim added successfully.");
         } catch (SQLException e) {
@@ -155,4 +156,26 @@ public class database implements AutoCloseable {
         }
         return searchResults;
     }
+
+    public void printDisasterVictimTable() {
+        try {
+            // Fetch all records from the DISASTERVICTIM table
+            PreparedStatement statement = dbConnect.prepareStatement("SELECT * FROM DISASTERVICTIM");
+            ResultSet resultSet = statement.executeQuery();
+
+            // Print each record
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String birthDate = resultSet.getString("birth_date");
+                String dietaryRestrictions = resultSet.getString("dietary_restrictions");
+
+                System.out.println(firstName + ", " + lastName + ", " + birthDate + ", " + dietaryRestrictions);
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to fetch DISASTERVICTIM table:");
+            e.printStackTrace();
+        }
+    }
+
 }

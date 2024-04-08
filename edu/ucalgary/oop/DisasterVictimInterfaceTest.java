@@ -58,6 +58,11 @@ public class DisasterVictimInterfaceTest {
         String input = "Location\nJohn\nDoe\nTreatment\n2024-01-01\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
+        // Redirect output stream to capture printed messages
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Call the method to be tested
         DisasterVictimInterface.enterMedicalRecord();
 
         // Test output

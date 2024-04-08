@@ -56,15 +56,16 @@ INSERT INTO INQUIRY_LOG (id, inquirer, callDate, details) VALUES
 CREATE TABLE DISASTERVICTIM (
     first_name VARCHAR(150),
     last_name VARCHAR(150),
-    date VARCHAR(150)
+    birth_date VARCHAR(150),
+    dietary_restrictions VARCHAR(150)
 );
 
-INSERT INTO DISASTERVICTIM (first_name, last_name, birth_date) VALUES
-('Aaryan', 'Dhand', '2022-02-02'),
-('Raju', 'Singham', '2023-09-09'),
-('Adeeb','Hoss', '2017-01-15'),
-('Arvin','Randy', '2019-02-13'),
-('Satwant','Tiwanna', '1892-02-29'); 
+INSERT INTO DISASTERVICTIM (first_name, last_name, birth_date, dietary_restrictions) VALUES
+('Aaryan', 'Dhand', '2022-02-02', 'VGML'),
+('Raju', 'Singham', '2023-09-09', 'DBML, VGML'),
+('Adeeb','Hoss', '2017-01-15', 'MOML'),
+('Arvin','Randy', '2019-02-13', ''),
+('Satwant','Tiwanna', '1892-02-29', ''); 
 
 CREATE TABLE FAMILYRELATION (
     first_name1 VARCHAR(150),

@@ -3,6 +3,9 @@ package edu.ucalgary.oop;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,5 +49,28 @@ public class PersonTest {
         victim.setLastName(newLastName);
         assertEquals("setLastName should update and getLastName should return the new last name", newLastName,
                 victim.getLastName());
+    }
+
+    @Test
+    public void testAgeCalculationWithZeroAge() {
+        // Person born on the current date should have age 0
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Person person = new Person("John", "Doe", currentDate);
+        assertEquals("Age should be 0 for a person born on the current date", 0, person.getAge());
+    }
+
+    @Test
+    public void testAgeCalculationWithHighAge() {
+        // Person born 100 years ago
+        String birthDate = LocalDate.now().minusYears(100).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Person person = new Person("John", "Doe", birthDate);
+        assertEquals("Age should be approximately 100 for a person born 100 years ago", 100, person.getAge(), 1);
+    }
+
+    @Test
+    public void testConstructorWithValidAge() {
+        int age = 25;
+        Person person = new Person("John", "Doe", age);
+        assertEquals("Constructor should correctly set the age", age, person.getAge());
     }
 }

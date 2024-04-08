@@ -66,9 +66,6 @@ public class DisasterVictim extends Person {
         return this.personalBelongings;
     }
 
-    // The add and remove methods remain correct.
-
-    // Correct the setters to accept Lists instead of arrays
     public void setFamilyConnections(ArrayList<FamilyRelation> connections) {
         this.familyConnections.clear();
         for (FamilyRelation newRecord : connections) {

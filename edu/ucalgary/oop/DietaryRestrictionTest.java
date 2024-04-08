@@ -20,15 +20,17 @@ public class DietaryRestrictionTest {
     }
 
     @Test
-    public void testEnumDescriptions() {
-        assertEquals("Asian vegetarian meal", DietaryRestriction.AVML.getDescription());
-        assertEquals("Diabetic meal", DietaryRestriction.DBML.getDescription());
-        assertEquals("Gluten intolerant meal", DietaryRestriction.GFML.getDescription());
-        assertEquals("Kosher meal", DietaryRestriction.KSML.getDescription());
-        assertEquals("Low salt meal", DietaryRestriction.LSML.getDescription());
-        assertEquals("Muslim meal", DietaryRestriction.MOML.getDescription());
-        assertEquals("Peanut-free meal", DietaryRestriction.PFML.getDescription());
-        assertEquals("Vegan meal", DietaryRestriction.VGML.getDescription());
-        assertEquals("Vegetarian Jain meal", DietaryRestriction.VJML.getDescription());
+    public void testGetDescriptions() {
+        String expectedDescriptions = "AVML - Asian vegetarian meal\n" +
+                "DBML - Diabetic meal\n" +
+                "GFML - Gluten intolerant meal\n" +
+                "KSML - Kosher meal\n" +
+                "LSML - Low salt meal\n" +
+                "MOML - Muslim meal\n" +
+                "PFML - Peanut-free meal\n" +
+                "VGML - Vegan meal\n" +
+                "VJML - Vegetarian Jain meal\n";
+
+        assertEquals(expectedDescriptions, DietaryRestriction.getDescriptions());
     }
 }
