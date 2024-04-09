@@ -66,6 +66,19 @@ public class database implements AutoCloseable {
             System.err.println("Failed to add family relation:");
             e.printStackTrace();
         }
+        try (PreparedStatement statement = dbConnect.prepareStatement(
+                "INSERT INTO familyrelation (first_name1, last_name1, first_name2, last_name2, relationship_type) VALUES (?, ?, ?, ?, ?)")) {
+            statement.setString(1, relatedFirstName);
+            statement.setString(2, relatedLastName);
+            statement.setString(3, victimFirstName);
+            statement.setString(4, victimLastName);
+            statement.setString(5, relationship);
+            statement.executeUpdate();
+            System.out.println("Family relation added successfully.");
+        } catch (SQLException e) {
+            System.err.println("Failed to add family relation:");
+            e.printStackTrace();
+        }
     }
 
     public void addMedicalRecord(String locationName, String first_name, String last_name, String treatmentDetails,

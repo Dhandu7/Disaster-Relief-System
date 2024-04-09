@@ -76,7 +76,10 @@ CREATE TABLE FAMILYRELATION (
 
 INSERT INTO FAMILYRELATION (first_name1, last_name1, first_name2, last_name2, relationship_type) VALUES
 ('Aaryan', 'Dhand', 'Raju', 'Singham', 'son'),
+('Raju', 'Singham', 'Aaryan', 'Dhand', 'son'),
 ('Satwant', 'Tiwanna', 'Arvin', 'Randy', 'son'),
+('Arvin', 'Randy', 'Satwant', 'Tiwanna', 'son'),
+('Adeeb', 'Hoss', 'Arvin', 'Randy', 'brother'),
 ('Arvin', 'Randy', 'Adeeb', 'Hoss', 'brother');
 
 CREATE TABLE MEDICALRECORD (
