@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
 public class DisasterVictimInterface {
     private static Scanner scanner = new Scanner(System.in);
@@ -77,6 +78,10 @@ public class DisasterVictimInterface {
         System.out.print("Dietary Restrictions (separate with comma and use abbreviations) -- leave blank for none:");
         String dietaryRestrictions = scanner.nextLine();
 
+        if (!validateDietaryRestrictions(dietaryRestrictions)) {
+            throw new IllegalArgumentException("Invalid dietary restrictions entered.");
+        }
+
         dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth, dietaryRestrictions);
     }
 
@@ -136,6 +141,21 @@ public class DisasterVictimInterface {
             // Parsing failed, return false
             return false;
         }
+    }
+
+    private static boolean validateDietaryRestrictions(String dietaryRestrictions) {
+        // If no dietary restrictions entered, return true
+        if (dietaryRestrictions.isBlank()) {
+            return true;
+        }
+
+        // Split input into individual dietary restrictions
+        String[] restrictionsArray = dietaryRestrictions.split(",");
+
+        // Check if each dietary restriction is valid
+        return Arrays.stream(restrictionsArray)
+                .allMatch(restriction -> Arrays.stream(DietaryRestriction.values())
+                        .anyMatch(enumValue -> enumValue.name().equals(restriction.trim())));
     }
 
 }

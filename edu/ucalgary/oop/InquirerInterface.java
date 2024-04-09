@@ -3,6 +3,7 @@ package edu.ucalgary.oop;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Date;
 
 public class InquirerInterface {
@@ -191,6 +192,10 @@ public class InquirerInterface {
         System.out.print("Dietary Restrictions (separate with comma and use abbreviations) -- leave blank for none:");
         String dietaryRestrictions = scanner.nextLine();
 
+        if (!validateDietaryRestrictions(dietaryRestrictions)) {
+            throw new IllegalArgumentException("Invalid dietary restrictions entered.");
+        }
+
         dbInstance.addDisasterVictim(firstName, lastName, dateOfBirth, dietaryRestrictions);
     }
 
@@ -236,5 +241,20 @@ public class InquirerInterface {
         String date_of_treatment = scanner.nextLine();
 
         dbInstance.addMedicalRecord(locationName, firstName, lastName, treatment_detail, date_of_treatment);
+    }
+
+    private static boolean validateDietaryRestrictions(String dietaryRestrictions) {
+        // If no dietary restrictions entered, return true
+        if (dietaryRestrictions.isBlank()) {
+            return true;
+        }
+
+        // Split input into individual dietary restrictions
+        String[] restrictionsArray = dietaryRestrictions.split(",");
+
+        // Check if each dietary restriction is valid
+        return Arrays.stream(restrictionsArray)
+                .allMatch(restriction -> Arrays.stream(DietaryRestriction.values())
+                        .anyMatch(enumValue -> enumValue.name().equals(restriction.trim())));
     }
 }

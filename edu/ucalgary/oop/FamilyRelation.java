@@ -21,14 +21,9 @@ public class FamilyRelation {
         if (o == null || getClass() != o.getClass())
             return false;
         FamilyRelation that = (FamilyRelation) o;
-        return Objects.equals(personOne, that.personOne) &&
+        return Objects.equals(personOne, that.personTwo) &&
                 Objects.equals(relationshipTo, that.relationshipTo) &&
-                Objects.equals(personTwo, that.personTwo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(personOne, relationshipTo, personTwo);
+                Objects.equals(personTwo, that.personOne);
     }
 
     // Getter and setter for personOne

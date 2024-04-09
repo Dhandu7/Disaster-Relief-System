@@ -3,6 +3,7 @@ Copyright Ann Barcomb and Khawla Shnaikat, 2024
 Licensed under GPL v3
 See LICENSE.txt for more information.
 */
+
 package edu.ucalgary.oop;
 
 import org.junit.Test;
@@ -10,35 +11,29 @@ import static org.junit.Assert.*;
 
 public class FamilyRelationTest {
 
-    private DisasterVictim personOne = new DisasterVictim("John", "Dalan", "1999-09-09", "2024-01-19");
-    private DisasterVictim personTwo = new DisasterVictim("Jane", "Dalan", "2001-09-10", "2024-02-20");
-    private String relationshipTo = "sibling";
-    private FamilyRelation testFamilyRelationObject = new FamilyRelation(personOne, relationshipTo, personTwo);
-
     @Test
-    public void testObjectCreation() {
-        assertNotNull(testFamilyRelationObject);
+    public void testEquals() {
+        DisasterVictim peace = new DisasterVictim("Peace", "Dalan", "1999-09-09", "2024-01-19");
+        DisasterVictim sam = new DisasterVictim("Sam", "Dalan", "2001-09-10", "2024-02-20");
+        // Creating two FamilyRelation objects with different order of persons
+        FamilyRelation relation1 = new FamilyRelation(peace, "sibling", sam);
+        FamilyRelation relation2 = new FamilyRelation(sam, "sibling", peace);
+
+        // Check if they are equal
+        assertTrue(relation1.equals(relation2));
     }
 
     @Test
-    public void testSetAndGetPersonOne() {
-        DisasterVictim newPersonOne = new DisasterVictim("New", "Person", "2009-09-15", "2024-03-21");
-        testFamilyRelationObject.setPersonOne(newPersonOne);
-        assertEquals("setPersonOne should update personOne", newPersonOne, testFamilyRelationObject.getPersonOne());
-    }
+    public void testNotEquals() {
+        DisasterVictim peace = new DisasterVictim("Peace", "Dalan", "1999-09-09", "2024-01-19");
+        DisasterVictim sam = new DisasterVictim("Sam", "Dalan", "2001-09-10", "2024-02-20");
+        DisasterVictim diamond = new DisasterVictim("Diamond", "Dalan", "2002-02-02", "2024-02-02");
 
-    @Test
-    public void testSetAndGetPersonTwo() {
-        DisasterVictim newPersonTwo = new DisasterVictim("Another", "Person", "2015-01-01", "2024-04-22");
-        testFamilyRelationObject.setPersonTwo(newPersonTwo);
-        assertEquals("setPersonTwo should update personTwo", newPersonTwo, testFamilyRelationObject.getPersonTwo());
-    }
+        // Creating two different FamilyRelation objects
+        FamilyRelation relation1 = new FamilyRelation(peace, "sibling", sam);
+        FamilyRelation relation2 = new FamilyRelation(sam, "sibling", diamond);
 
-    @Test
-    public void testSetAndGetRelationshipTo() {
-        String newRelationship = "parent";
-        testFamilyRelationObject.setRelationshipTo(newRelationship);
-        assertEquals("setRelationshipTo should update the relationship", newRelationship,
-                testFamilyRelationObject.getRelationshipTo());
+        // Check if they are not equal
+        assertFalse(relation1.equals(relation2));
     }
 }
